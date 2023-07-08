@@ -32,6 +32,18 @@ const videoMap = {
 };
 function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  async function preloadVideo(src: any) {
+    const res = await fetch(src);
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
+  }
+  useEffect(() => {
+    const prefetch = async () => {
+      const video = document.createElement("video");
+      video.src = await preloadVideo("character_z.mp4");
+    };
+    prefetch();
+  }, []);
   const handleKeyPress = (ev: any) => {
     const key = ev.key as keyof typeof videoMap;
     const listCharacter = Object.keys(videoMap) as [keyof typeof videoMap];
