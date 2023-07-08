@@ -39,6 +39,7 @@ function App() {
   }
   useEffect(() => {
     const prefetch = async () => {
+      console.log("GO HERE");
       const video = document.createElement("video");
       video.src = await preloadVideo("character_z.mp4");
     };
