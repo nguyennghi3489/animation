@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./App.css";
 
 const videoMap = {
+  intro: "27_retro futurism.mp4",
   a: "character_a.mp4",
   b: "character_b.mp4",
   c: "character_c.mp4",
@@ -31,6 +32,7 @@ const videoMap = {
 };
 function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const isKeyDownRef = useRef(false);
   let db = useRef<any>(null);
 
   const prefetchVideos = () => {
@@ -54,18 +56,6 @@ function App() {
               .objectStore("videos");
             videoObjectStore.add({ name: key, blob: blob });
           };
-          // const test = objectStore.get("test");
-          // test.onerror = (event: any) => {
-          //   console.log("error");
-          // };
-          // test.onsuccess = (event: any) => {
-          //   if (videoRef && videoRef.current) {
-          //     videoRef.current.setAttribute(
-          //       "src",
-          //       window.URL.createObjectURL(test.result.blob)
-          //     );
-          //   }
-          // };
         };
 
         request.onupgradeneeded = (event: any) => {
@@ -79,6 +69,10 @@ function App() {
   };
 
   const handleKeyPress = (ev: any) => {
+    if (isKeyDownRef.current) {
+      return;
+    }
+    isKeyDownRef.current = true;
     const key = ev.key as keyof typeof videoMap;
     const listCharacter = Object.keys(videoMap) as [keyof typeof videoMap];
     if (!listCharacter.includes(key)) {
@@ -102,10 +96,31 @@ function App() {
     }
   };
 
+  const reset = () => {
+    isKeyDownRef.current = false;
+    if (db && db.current) {
+      const transaction = db.current.transaction(["videos"]);
+      const objectStore = transaction.objectStore("videos");
+      const test = objectStore.get("intro");
+      test.onerror = (event: any) => {
+        console.log("error");
+      };
+      test.onsuccess = (event: any) => {
+        if (videoRef && videoRef.current) {
+          videoRef.current.setAttribute(
+            "src",
+            window.URL.createObjectURL(test.result.blob)
+          );
+        }
+      };
+    }
+  };
+
   useEffect(() => {
     console.log("START PREFETCH");
     prefetchVideos();
     window.addEventListener("keydown", handleKeyPress, false);
+    window.addEventListener("keyup", reset, false);
   }, []);
 
   return (
@@ -120,7 +135,7 @@ function App() {
         preload="auto"
         ref={videoRef}
       >
-        <source src="character_a.mp4" type="video/mp4" />
+        <source src="27_retro futurism.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
