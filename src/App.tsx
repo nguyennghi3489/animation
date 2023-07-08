@@ -30,6 +30,36 @@ const videoMap = {
   y: "Y_y2k.mp4",
   z: "Z_zine.mp4",
 };
+
+const videoMap = {
+  intro: "M_multiverse_of_sadness.mp4",
+  a: "A_art_nouveau.mp4",
+  b: "B_bauhaus.mp4",
+  c: "C_cubism.mp4",
+  d: "D_dadaism.mp4",
+  e: "E_expressionism.mp4",
+  f: "F_fauvism.mp4",
+  g: "G_glass_painting.mp4",
+  h: "H_handrawing.mp4",
+  i: "I_impressionism.mp4",
+  j: "J_japonism.mp4",
+  k: "K_kawaii.mp4",
+  l: "L_lofi.mp4",
+  m: "M_mosaic.mp4",
+  n: "N_nostagia.mp4",
+  o: "O_op_art.mp4",
+  p: "P_Psychedelic.mp4",
+  q: "Q_queencore.mp4",
+  r: "R_retro_futurism.mp4",
+  s: "S_surrealism.mp4",
+  t: "T_textile.mp4",
+  u: "U_utopia.mp4",
+  v: "V_Vaporwave.mp4",
+  w: "W_woodcut.mp4",
+  x: "X_xenomorph.mp4",
+  y: "Y_y2k.mp4",
+  z: "Z_zine.mp4",
+};
 function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isKeyDownRef = useRef(false);
@@ -135,7 +165,7 @@ function App() {
         preload="auto"
         ref={videoRef}
       >
-        <source src="27_retro futurism.mp4" type="video/mp4" />
+        <source src="M_multiverse_of_sadness.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
