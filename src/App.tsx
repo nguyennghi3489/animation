@@ -1,5 +1,4 @@
-import React, { KeyboardEvent, useEffect, useRef } from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useRef } from "react";
 import "./App.css";
 
 const videoMap = {
@@ -36,12 +35,11 @@ function App() {
 
   const prefetchVideos = () => {
     for (let key in videoMap) {
-      console.log(key);
       const videoRequest = fetch(videoMap[key as keyof typeof videoMap]).then(
         (response) => response.blob()
       );
       videoRequest.then((blob) => {
-        const request = indexedDB.open("videosDB", 1);
+        const request = indexedDB.open("videosDB", 3);
 
         request.onsuccess = (event: any) => {
           console.log(key);
