@@ -101,6 +101,7 @@ function App() {
   };
 
   useEffect(() => {
+    console.log("START PREFETCH");
     prefetchVideos();
     window.addEventListener("keydown", handleKeyPress, false);
   }, []);
