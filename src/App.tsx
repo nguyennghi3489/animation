@@ -31,7 +31,7 @@ const videoMap = {
   z: "Z_zine.mp4",
 };
 
-const videoMap = {
+const audioMap = {
   intro: "M_multiverse_of_sadness.mp4",
   a: "A_art_nouveau.mp4",
   b: "B_bauhaus.mp4",
