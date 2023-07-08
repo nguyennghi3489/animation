@@ -42,8 +42,8 @@ function App() {
         const request = indexedDB.open("videosDB", 3);
 
         request.onsuccess = (event: any) => {
-          console.log(key);
           db.current = event.target.result;
+          console.log(key);
           const transaction = db.current.transaction(["videos"]);
           const objectStore = transaction.objectStore("videos");
           objectStore.transaction.oncomplete = (event: any) => {
