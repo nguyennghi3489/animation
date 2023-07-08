@@ -32,30 +32,76 @@ const videoMap = {
 };
 function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  async function preloadVideo(src: any) {
-    const res = await fetch(src);
-    const blob = await res.blob();
-    return URL.createObjectURL(blob);
-  }
-  useEffect(() => {
-    const prefetch = async () => {
-      console.log("GO HERE");
-      const video = document.createElement("video");
-      video.src = await preloadVideo("character_z.mp4");
-    };
-    prefetch();
-  }, []);
+  let db = useRef<any>(null);
+
+  const prefetchVideos = () => {
+    for (let key in videoMap) {
+      const videoRequest = fetch(videoMap[key as keyof typeof videoMap]).then(
+        (response) => response.blob()
+      );
+      videoRequest.then((blob) => {
+        const request = indexedDB.open("databaseNameHere", 1);
+
+        request.onsuccess = (event: any) => {
+          db.current = event.target.result;
+          const transaction = db.current.transaction(["videos"]);
+          const objectStore = transaction.objectStore("videos");
+          objectStore.transaction.oncomplete = (event: any) => {
+            const videoObjectStore = db.current
+              .transaction("videos", "readwrite")
+              .objectStore("videos");
+            videoObjectStore.put({ name: key, blob: blob });
+          };
+          // const test = objectStore.get("test");
+          // test.onerror = (event: any) => {
+          //   console.log("error");
+          // };
+          // test.onsuccess = (event: any) => {
+          //   if (videoRef && videoRef.current) {
+          //     videoRef.current.setAttribute(
+          //       "src",
+          //       window.URL.createObjectURL(test.result.blob)
+          //     );
+          //   }
+          // };
+        };
+
+        request.onupgradeneeded = (event: any) => {
+          const db = event.target.result;
+          db.createObjectStore("videos", {
+            keyPath: "name",
+          });
+        };
+      });
+    }
+  };
+
   const handleKeyPress = (ev: any) => {
     const key = ev.key as keyof typeof videoMap;
     const listCharacter = Object.keys(videoMap) as [keyof typeof videoMap];
-    if (listCharacter.includes(key)) {
-      if (videoRef && videoRef.current) {
-        videoRef.current.setAttribute("src", videoMap[key]);
-      }
+    if (!listCharacter.includes(key)) {
+      return;
+    }
+    if (db && db.current) {
+      const transaction = db.current.transaction(["videos"]);
+      const objectStore = transaction.objectStore("videos");
+      const test = objectStore.get(key);
+      test.onerror = (event: any) => {
+        console.log("error");
+      };
+      test.onsuccess = (event: any) => {
+        if (videoRef && videoRef.current) {
+          videoRef.current.setAttribute(
+            "src",
+            window.URL.createObjectURL(test.result.blob)
+          );
+        }
+      };
     }
   };
 
   useEffect(() => {
+    prefetchVideos();
     window.addEventListener("keydown", handleKeyPress, false);
   }, []);
 
