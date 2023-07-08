@@ -39,8 +39,9 @@ function App() {
       const videoRequest = fetch(videoMap[key as keyof typeof videoMap]).then(
         (response) => response.blob()
       );
+      console.log(key);
       videoRequest.then((blob) => {
-        const request = indexedDB.open("databaseNameHere", 1);
+        const request = indexedDB.open("videos-db", 1);
 
         request.onsuccess = (event: any) => {
           console.log(key);
