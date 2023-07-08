@@ -43,14 +43,17 @@ function App() {
         const request = indexedDB.open("databaseNameHere", 1);
 
         request.onsuccess = (event: any) => {
+          console.log(key);
           db.current = event.target.result;
           const transaction = db.current.transaction(["videos"]);
           const objectStore = transaction.objectStore("videos");
           objectStore.transaction.oncomplete = (event: any) => {
+            console.log(key);
+            console.log("key complete");
             const videoObjectStore = db.current
               .transaction("videos", "readwrite")
               .objectStore("videos");
-            videoObjectStore.put({ name: key, blob: blob });
+            videoObjectStore.add({ name: key, blob: blob });
           };
           // const test = objectStore.get("test");
           // test.onerror = (event: any) => {
