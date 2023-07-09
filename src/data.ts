@@ -25,7 +25,7 @@ export const VIDEO_AUDIO_MAP: IVideoAudioMap = {
   k: { video: "video/K_kawaii_1.mp4", audio: "audio/kawaii.mp3" },
   l: { video: "video/L_lofi_1.mp4", audio: "audio/lofi.mp3" },
   m: { video: "video/M_mosaic_1.mp4", audio: "audio/Mosaic.mp3" },
-  n: { video: "video/N_nostagia_1.mp4", audio: "audio/nostagia.mp3" },
+  n: { video: "video/N_nostalgia_1.mp4", audio: "audio/nostagia.mp3" },
   o: { video: "video/O_op_art_1.mp4", audio: "audio/op_art.mp3" },
   p: { video: "video/P_Psychedelic_1.mp4", audio: "audio/PSYCHEDELIA.mp3" },
   q: { video: "video/Q_queencore_1.mp4", audio: "audio/queencore.mp3" },
