@@ -34,7 +34,7 @@ export const VIDEO_AUDIO_MAP: IVideoAudioMap = {
     audio: "audio/retro_futurism.mp3",
   },
   s: { video: "video/S_surrealism_1.mp4", audio: "audio/surrealism.mp3" },
-  t: { video: "video/S_surreaT_textilelism_1.mp4", audio: "audio/Textile.mp3" },
+  t: { video: "video/T_textile_1.mp4", audio: "audio/Textile.mp3" },
   u: { video: "video/U_utopia_1.mp4", audio: "audio/utopia.mp3" },
   v: { video: "video/V_Vaporwave_1.mp4", audio: "audio/vaporwave.mp3" },
   w: { video: "video/W_woodcut_1.mp4", audio: "audio/woodcut.mp3" },
