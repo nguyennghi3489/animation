@@ -117,11 +117,11 @@ function App() {
         preload="auto"
         ref={videoRef}
       >
-        <source src="M_multiverse_of_sadness.mp4" type="video/mp4" />
+        <source src="video/Homepage.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <audio controls={true} loop={true} autoPlay={true} ref={audioRef}>
-        <source src="audio/Textile.mp3" />
+        <source src="audio/homepage2.mp3" />
         Your browser does not support the audio tag.
       </audio>
     </div>
