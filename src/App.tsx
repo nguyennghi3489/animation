@@ -1,86 +1,26 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./App.css";
+import { VIDEO_AUDIO_MAP } from "./data";
 
-const videoMap = {
-  intro: "M_multiverse_of_sadness.mp4",
-  a: "A_art_nouveau.mp4",
-  b: "B_bauhaus.mp4",
-  c: "C_cubism.mp4",
-  d: "D_dadaism.mp4",
-  e: "E_expressionism.mp4",
-  f: "F_fauvism.mp4",
-  g: "G_glass_painting.mp4",
-  h: "H_handrawing.mp4",
-  i: "I_impressionism.mp4",
-  j: "J_japonism.mp4",
-  k: "K_kawaii.mp4",
-  l: "L_lofi.mp4",
-  m: "M_mosaic.mp4",
-  n: "N_nostagia.mp4",
-  o: "O_op_art.mp4",
-  p: "P_Psychedelic.mp4",
-  q: "Q_queencore.mp4",
-  r: "R_retro_futurism.mp4",
-  s: "S_surrealism.mp4",
-  t: "T_textile.mp4",
-  u: "U_utopia.mp4",
-  v: "V_Vaporwave.mp4",
-  w: "W_woodcut.mp4",
-  x: "X_xenomorph.mp4",
-  y: "Y_y2k.mp4",
-  z: "Z_zine.mp4",
-};
-
-const audioMap = {
-  intro: "M_multiverse_of_sadness.mp4",
-  a: "A_art_nouveau.mp4",
-  b: "B_bauhaus.mp4",
-  c: "C_cubism.mp4",
-  d: "D_dadaism.mp4",
-  e: "E_expressionism.mp4",
-  f: "F_fauvism.mp4",
-  g: "G_glass_painting.mp4",
-  h: "H_handrawing.mp4",
-  i: "I_impressionism.mp4",
-  j: "J_japonism.mp4",
-  k: "K_kawaii.mp4",
-  l: "L_lofi.mp4",
-  m: "M_mosaic.mp4",
-  n: "N_nostagia.mp4",
-  o: "O_op_art.mp4",
-  p: "P_Psychedelic.mp4",
-  q: "Q_queencore.mp4",
-  r: "R_retro_futurism.mp4",
-  s: "S_surrealism.mp4",
-  t: "T_textile.mp4",
-  u: "U_utopia.mp4",
-  v: "V_Vaporwave.mp4",
-  w: "W_woodcut.mp4",
-  x: "X_xenomorph.mp4",
-  y: "Y_y2k.mp4",
-  z: "Z_zine.mp4",
-};
 function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const isKeyDownRef = useRef(false);
   let db = useRef<any>(null);
 
   const prefetchVideos = () => {
-    for (let key in videoMap) {
-      const videoRequest = fetch(videoMap[key as keyof typeof videoMap]).then(
-        (response) => response.blob()
-      );
+    for (let key in VIDEO_AUDIO_MAP) {
+      const videoRequest = fetch(
+        VIDEO_AUDIO_MAP[key as keyof typeof VIDEO_AUDIO_MAP].video
+      ).then((response) => response.blob());
       videoRequest.then((blob) => {
         const request = indexedDB.open("videosDB", 3);
 
         request.onsuccess = (event: any) => {
           db.current = event.target.result;
-          console.log(key);
           const transaction = db.current.transaction(["videos"]);
           const objectStore = transaction.objectStore("videos");
           objectStore.transaction.oncomplete = (event: any) => {
-            console.log(key);
-            console.log("key complete");
             const videoObjectStore = db.current
               .transaction("videos", "readwrite")
               .objectStore("videos");
@@ -103,8 +43,10 @@ function App() {
       return;
     }
     isKeyDownRef.current = true;
-    const key = ev.key as keyof typeof videoMap;
-    const listCharacter = Object.keys(videoMap) as [keyof typeof videoMap];
+    const key = ev.key as keyof typeof VIDEO_AUDIO_MAP;
+    const listCharacter = Object.keys(VIDEO_AUDIO_MAP) as [
+      keyof typeof VIDEO_AUDIO_MAP
+    ];
     if (!listCharacter.includes(key)) {
       return;
     }
@@ -121,6 +63,11 @@ function App() {
             "src",
             window.URL.createObjectURL(test.result.blob)
           );
+          if (audioRef && audioRef.current) {
+            const audio =
+              VIDEO_AUDIO_MAP[key as keyof typeof VIDEO_AUDIO_MAP].audio;
+            audioRef.current.setAttribute("src", audio);
+          }
         }
       };
     }
@@ -141,13 +88,18 @@ function App() {
             "src",
             window.URL.createObjectURL(test.result.blob)
           );
+          if (audioRef && audioRef.current) {
+            audioRef.current.setAttribute(
+              "src",
+              VIDEO_AUDIO_MAP["intro"].audio
+            );
+          }
         }
       };
     }
   };
 
   useEffect(() => {
-    console.log("START PREFETCH");
     prefetchVideos();
     window.addEventListener("keydown", handleKeyPress, false);
     window.addEventListener("keyup", reset, false);
@@ -168,6 +120,10 @@ function App() {
         <source src="M_multiverse_of_sadness.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+      <audio controls={true} loop={true} autoPlay={true} ref={audioRef}>
+        <source src="audio/Textile.mp3" />
+        Your browser does not support the audio tag.
+      </audio>
     </div>
   );
 }
