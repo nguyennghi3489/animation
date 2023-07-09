@@ -118,11 +118,9 @@ function App() {
         ref={videoRef}
       >
         <source src="video/Homepage.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
       </video>
       <audio controls={true} loop={true} autoPlay={true} ref={audioRef}>
         <source src="audio/homepage2.mp3" />
-        Your browser does not support the audio tag.
       </audio>
     </div>
   );
