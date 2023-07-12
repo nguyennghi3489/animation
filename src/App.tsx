@@ -148,7 +148,7 @@ function App() {
       {/* ) : ( */}
       <div
         className="loadingScreen"
-        style={{ display: preloadHomeVideo ? "none" : "block" }}
+        style={{ display: preloadHomeVideo ? "block" : "none" }}
       >
         <div className="lds-ripple">
           <div></div>
