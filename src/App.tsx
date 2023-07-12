@@ -131,7 +131,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* {!preloadHomeVideo ? ( */}
       <video
         style={{ position: "relative", zIndex: preloadHomeVideo ? 10 : 1000 }}
         width="100%"
@@ -145,17 +144,15 @@ function App() {
       >
         <source src="video/Homepage.mp4" type="video/mp4" />
       </video>
-      {/* ) : ( */}
       <div
         className="loadingScreen"
-        style={{ display: preloadHomeVideo ? "block" : "none" }}
+        style={{ display: preloadHomeVideo ? "flex" : "none" }}
       >
         <div className="lds-ripple">
           <div></div>
           <div></div>
         </div>
       </div>
-      {/* )} */}
       <audio
         controls={true}
         loop={true}
