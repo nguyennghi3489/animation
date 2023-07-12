@@ -14,7 +14,8 @@ function App() {
   let db = useRef<any>(null);
 
   const fetchHomeVideo = async () => {
-    await fetch("video/Homepage.mp4");
+    const data = await fetch("video/Homepage.mp4");
+    await data.blob();
     setPreloadHomeVideo(false);
   };
 
