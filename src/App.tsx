@@ -1,12 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { VIDEO_AUDIO_MAP } from "./data";
 
+function detectMob() {
+  return window.innerWidth <= 800 && window.innerHeight <= 600;
+}
+
 function App() {
+  const [preloadHomeVideo, setPreloadHomeVideo] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const isKeyDownRef = useRef(false);
   let db = useRef<any>(null);
+
+  const fetchHomeVideo = async () => {
+    await fetch("video/Homepage.mp4");
+    setPreloadHomeVideo(false);
+  };
 
   const prefetchVideos = () => {
     for (let key in VIDEO_AUDIO_MAP) {
@@ -100,25 +110,39 @@ function App() {
   };
 
   useEffect(() => {
-    prefetchVideos();
-    window.addEventListener("keydown", handleKeyPress, false);
-    window.addEventListener("keyup", reset, false);
+    if (!detectMob()) {
+      fetchHomeVideo();
+      prefetchVideos();
+      window.addEventListener("keydown", handleKeyPress, false);
+      window.addEventListener("keyup", reset, false);
+    } else {
+      if (videoRef && videoRef.current) {
+        videoRef.current.setAttribute("style", "display:none;");
+        if (audioRef && audioRef.current) {
+          audioRef.current.setAttribute("style", "display:none;");
+        }
+      }
+    }
   }, []);
 
   return (
     <div className="App">
-      <video
-        width="100%"
-        height="100%"
-        controls={false}
-        loop
-        muted
-        autoPlay
-        preload="auto"
-        ref={videoRef}
-      >
-        <source src="video/Homepage.mp4" type="video/mp4" />
-      </video>
+      {!preloadHomeVideo ? (
+        <video
+          width="100%"
+          height="100%"
+          controls={false}
+          loop
+          muted
+          autoPlay
+          preload="auto"
+          ref={videoRef}
+        >
+          <source src="video/Homepage.mp4" type="video/mp4" />
+        </video>
+      ) : (
+        <div>LOADING</div>
+      )}
       <audio controls={true} loop={true} autoPlay={true} ref={audioRef}>
         <source src="audio/homepage2.mp3" />
       </audio>
