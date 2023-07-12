@@ -148,7 +148,7 @@ function App() {
       {/* ) : ( */}
       <div
         className="loadingScreen"
-        style={{ zIndex: preloadHomeVideo ? 1000 : 10 }}
+        style={{ display: preloadHomeVideo ? "none" : "block" }}
       >
         <div className="lds-ripple">
           <div></div>

@@ -46,6 +46,7 @@
   position: absolute;
   top: 0;
   align-items: center;
+  z-index: 1000;
 }
 .lds-ripple {
   display: inline-block;
