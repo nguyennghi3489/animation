@@ -141,9 +141,20 @@ function App() {
           <source src="video/Homepage.mp4" type="video/mp4" />
         </video>
       ) : (
-        <div>LOADING</div>
+        <div className="loadingScreen">
+          <div className="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
       )}
-      <audio controls={true} loop={true} autoPlay={true} ref={audioRef}>
+      <audio
+        controls={true}
+        loop={true}
+        autoPlay={true}
+        ref={audioRef}
+        className="audio"
+      >
         <source src="audio/homepage2.mp3" />
       </audio>
     </div>
