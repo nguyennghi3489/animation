@@ -16,7 +16,10 @@ function App() {
   const fetchHomeVideo = async () => {
     const data = await fetch("video/Homepage.mp4");
     await data.blob();
-    setPreloadHomeVideo(false);
+    console.log(data);
+    setTimeout(() => {
+      setPreloadHomeVideo(false);
+    }, 1000);
   };
 
   const prefetchVideos = () => {
