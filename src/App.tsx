@@ -15,11 +15,11 @@ function App() {
 
   const fetchHomeVideo = async () => {
     const data = await fetch("video/Homepage.mp4");
-    await data.blob();
-    console.log(data);
-    setTimeout(() => {
+    const blob = await data.blob();
+    if (videoRef && videoRef.current) {
+      videoRef.current.setAttribute("src", window.URL.createObjectURL(blob));
       setPreloadHomeVideo(false);
-    }, 1000);
+    }
   };
 
   const prefetchVideos = () => {
@@ -131,27 +131,31 @@ function App() {
 
   return (
     <div className="App">
-      {!preloadHomeVideo ? (
-        <video
-          width="100%"
-          height="100%"
-          controls={false}
-          loop
-          muted
-          autoPlay
-          preload="auto"
-          ref={videoRef}
-        >
-          <source src="video/Homepage.mp4" type="video/mp4" />
-        </video>
-      ) : (
-        <div className="loadingScreen">
-          <div className="lds-ripple">
-            <div></div>
-            <div></div>
-          </div>
+      {/* {!preloadHomeVideo ? ( */}
+      <video
+        style={{ position: "relative", zIndex: preloadHomeVideo ? 10 : 1000 }}
+        width="100%"
+        height="100%"
+        controls={false}
+        loop
+        muted
+        autoPlay
+        preload="auto"
+        ref={videoRef}
+      >
+        <source src="video/Homepage.mp4" type="video/mp4" />
+      </video>
+      {/* ) : ( */}
+      <div
+        className="loadingScreen"
+        style={{ zIndex: preloadHomeVideo ? 1000 : 10 }}
+      >
+        <div className="lds-ripple">
+          <div></div>
+          <div></div>
         </div>
-      )}
+      </div>
+      {/* )} */}
       <audio
         controls={true}
         loop={true}
