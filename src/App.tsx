@@ -284,7 +284,7 @@ function App() {
           onSlide={hanldeSlide}
         />
       </div>
-      {/* <div
+      <div
         className="loadingScreen"
         style={{ display: preloadHomeVideo ? "flex" : "none" }}
       >
@@ -292,7 +292,7 @@ function App() {
           <div></div>
           <div></div>
         </div>
-      </div> */}
+      </div>
       <audio
         controls={true}
         loop={true}
