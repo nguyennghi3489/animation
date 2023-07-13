@@ -1,9 +1,22 @@
 import { useEffect, useRef, useState } from "react";
+import ImageGallery from "react-image-gallery";
 import "./App.css";
-import { VIDEO_AUDIO_MAP } from "./data";
+import { NUMBER_TO_CHARACTER_LIST, VIDEO_AUDIO_MAP } from "./data";
 
 function detectMob() {
-  return window.innerWidth <= 800 && window.innerHeight <= 600;
+  const toMatch = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i,
+  ];
+
+  return toMatch.some((toMatchItem) => {
+    return navigator.userAgent.match(toMatchItem);
+  });
 }
 
 function App() {
@@ -129,6 +142,125 @@ function App() {
     }
   }, []);
 
+  const images = [
+    {
+      original: "images/Homepage.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/A_art_nouveau.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/B_bauhaus.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/C_cubism.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/D_dadaism.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/E_expressionism.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/F_fauvism.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/G_glass_painting.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/H_handrawing.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/I_impressionism.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/J_japonism.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/K_kawaii.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/L_lofi.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/M_mosaic.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/N_nostalgia.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/O_op_art.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/P_Psychedelia.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/Q_queencore.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/R_retro_futurism.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/S_surrealism.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/T_textile.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/U_utopia.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/V_vaporwave.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/W_woodcut.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/X_xenomorph.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/Y_Y2K.gif",
+      originalClass: "image",
+    },
+    {
+      original: "images/Z_zine.gif",
+      originalClass: "image",
+    },
+  ];
+
+  const hanldeSlide = (index: any) => {
+    const key = NUMBER_TO_CHARACTER_LIST[index];
+    if (audioRef && audioRef.current) {
+      const audio = VIDEO_AUDIO_MAP[key as keyof typeof VIDEO_AUDIO_MAP].audio;
+      audioRef.current.setAttribute("src", audio);
+    }
+  };
+
   return (
     <div className="App">
       <video
@@ -144,6 +276,14 @@ function App() {
       >
         <source src="video/Homepage.mp4" type="video/mp4" />
       </video>
+      <div className="gallery">
+        <ImageGallery
+          items={images}
+          showFullscreenButton={false}
+          showPlayButton={false}
+          onSlide={hanldeSlide}
+        />
+      </div>
       <div
         className="loadingScreen"
         style={{ display: preloadHomeVideo ? "flex" : "none" }}
