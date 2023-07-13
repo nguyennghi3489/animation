@@ -284,6 +284,7 @@ function App() {
           showFullscreenButton={false}
           showPlayButton={false}
           onSlide={hanldeSlide}
+          disableSwipe
         />
       </div>
       <div
