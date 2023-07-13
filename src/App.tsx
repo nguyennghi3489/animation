@@ -136,7 +136,7 @@ function App() {
       if (videoRef && videoRef.current) {
         videoRef.current.setAttribute("style", "display:none;");
         if (audioRef && audioRef.current) {
-          audioRef.current.setAttribute("style", "display:none;");
+          audioRef.current.setAttribute("style", "visibilty:hidden;");
         }
       }
     }
@@ -257,7 +257,9 @@ function App() {
     const key = NUMBER_TO_CHARACTER_LIST[index];
     if (audioRef && audioRef.current) {
       const audio = VIDEO_AUDIO_MAP[key as keyof typeof VIDEO_AUDIO_MAP].audio;
+      console.log(audio);
       audioRef.current.setAttribute("src", audio);
+      audioRef.current.play();
     }
   };
 
